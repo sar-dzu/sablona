@@ -1,10 +1,11 @@
 <?php
-include('parts/header.php');
+include_once('parts/header.php');
+
 ?>
     
     <main>
       <section class="slides-container">
-        <?php include 'functions.php';
+        <?php include_once 'functions.php';
         generateSlides('img/banners');
         ?>
         

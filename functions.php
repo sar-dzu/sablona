@@ -17,3 +17,62 @@ function generateSlides($dir)
     echo '<a id="prev" class="prev"></a>';
     echo '<a id="next" class="next"></a>';
 }
+
+function validateMenuType($type)
+{
+    $menuTypes = [
+        'header',
+        'footer',
+    ];
+        return in_array($type, $menuTypes);
+}
+
+function getMenuData($type)
+{
+    $menu = [];
+    if (validateMenuType($type)) {
+        if ($type == "header") {
+            $menu = [
+                'home' => [
+                    'name' => 'Domov',
+                    'path' => 'index.php',
+                ],
+                'portfolio' => [
+                    'name' => 'Portfólio',
+                    'path' => 'portfolio.php',
+                ],
+                'qna' => [
+                    'name' => 'Q&A',
+                    'path' => 'qna.php',
+                ],
+                'kontakt' => [
+                    'name' => 'Kontakt',
+                    'path' => 'kontakt.php',
+                ]
+            ];
+        } elseif ($type == "footer") {
+            $menu = [
+                'home' => [
+                    'name' => 'Domov',
+                    'path' => 'index.php',
+                ],
+                'qna' => [
+                    'name' => 'Q&A',
+                    'path' => 'qna.php',
+                ],
+                'kontakt' => [
+                    'name' => 'Kontakt',
+                    'path' => 'kontakt.php',
+                ]
+            ];
+        }
+    }
+    return $menu;
+}
+
+function printMenu($menu)
+{
+    foreach ($menu as $menuName => $menuData) {
+        echo '<li><a href="'.$menuData['path'].'">'.$menuData['name'].'</a></li>';
+    }
+}

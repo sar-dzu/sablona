@@ -1,3 +1,8 @@
+<?php
+include_once ('functions.php');
+$menu = getMenuData("footer");
+?>
+
 <footer class="container bg-dark text-white">
     <div class="row">
         <div class="col-25">
@@ -13,9 +18,9 @@
         </div>
         <div class="col-25">
             <h4>Rýchle odkazy</h4>
-            <p><a href="/">Domov</a></p>
-            <p><a href="/qna">Q&A</a></p>
-            <p><a href="/kontakt">Kontakt</a></p>
+            <ul>
+                <?php printMenu($menu); ?>
+            </ul>
         </div>
         <div class="col-25">
             <h4>Nájdete nás</h4>
