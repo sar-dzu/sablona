@@ -7,7 +7,7 @@ include_once('functions.php');
 
         <main>
             <section class="banner">
-                <div class="container text-black">
+                <div class="container text-white">
                     <h1>Portfólio</h1>
                 </div>
             </section>
