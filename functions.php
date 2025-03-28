@@ -79,6 +79,7 @@ function printMenu(array $menu)
 
 
 // portfolio
+/*
 function preparePortfolio(int $numberOfRows = 2, int $numberOfCols = 4): array
 {
     $portfolio = [];
@@ -92,14 +93,19 @@ function preparePortfolio(int $numberOfRows = 2, int $numberOfCols = 4): array
     return $portfolio;
 }
 
+*/
+
 function finishPortfolio()
 {
-    $portfolio = preparePortfolio();
+    $json = file_get_contents("data/datas.json");
+    $data = json_decode($json, true);
+    $text = $data["portfolio"];
+    $portfolio = array_chunk(array_keys($text), 4);
     foreach ($portfolio as $row => $col) {
         echo '<div class="row">';
         foreach ($col as $index) {
             echo '<div class="col-25 portfolio text-white text-center" id="portfolio-'.$index.'">
-                Web stránka: '.$index.'
+                '.$text[$index].'
                 </div>';
         }
         echo '</div>';

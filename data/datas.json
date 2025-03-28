@@ -3,5 +3,15 @@
     "banner1.jpg":"Prvý nadpis",
     "banner2.jpg":"Druhý nadpis",
     "banner3.jpg":"Tretí nadpis"
+  },
+  "portfolio": {
+    "1": "Web stránka 1",
+    "2": "Web stránka 2",
+    "3": "Web stránka 3",
+    "4": "Web stránka 4",
+    "5": "Web stránka 5",
+    "6": "Web stránka 6",
+    "7": "Web stránka 7",
+    "8": "Web stránka 8"
   }
 }

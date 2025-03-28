@@ -27,9 +27,9 @@ include('parts/header.php');
         <div class="col-50 text-right">
             <h3>Napíšte nám</h3>
             <form id="contact" method="post" action="db/spracovanieFormulara.php">
-                <input type="text" placeholder="Vaše meno" id ="meno"  required><br>
-                <input type="email" placeholder="Váš email" id="email" required><br>
-                <textarea name="" placeholder="Vaša správa" id="sprava"></textarea><br>
+                <input type="text" name="meno" placeholder="Vaše meno" id ="meno"  required><br>
+                <input type="email" name="email" placeholder="Váš email" id="email" required><br>
+                <textarea name="sprava" placeholder="Vaša správa" id="sprava"></textarea><br>
                 <input type="checkbox" name="" id="" required>
                 <label for=""> Súhlasím so spracovaním osobných údajov.</label><br>
                 <input type="submit" value="Odoslať">
