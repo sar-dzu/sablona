@@ -13,5 +13,16 @@
     "6": "Web stránka 6",
     "7": "Web stránka 7",
     "8": "Web stránka 8"
+  },
+
+  "otazky": {
+    "1": "Otázka 1",
+    "2": "Otázka 2",
+    "3": "Otázka 3"
+  },
+  "odpovede": {
+    "1": "Odpoveď 1",
+    "2": "Odpoveď 2",
+    "3": "Odpoveď 3"
   }
 }

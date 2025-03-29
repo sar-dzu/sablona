@@ -1,7 +1,7 @@
 <?php
 include_once ('functions.php');
 $menu = getMenuData("header");
-$theme = $_GET["theme"];
+$theme = isset($theme) ? $_GET["theme"] : "light";
 ?>
 <header style="background-color: <?php echo $theme === "dark" ? "grey" : "white"; ?>" class="container main-header">
 
