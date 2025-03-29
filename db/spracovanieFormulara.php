@@ -1,37 +1,25 @@
 <?php
-$host = "localhost";
-$dbname = "formular";
-$port = 3306;
-$username = "root";
-$password = "";
 
-$options = array(
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    );
+require_once("../classes/Contact.php");
+use formular\Contact;
 
-// Pripojenie PDO
-try {
-    $conn = new PDO('mysql:host='.$host.';dbname='.$dbname.";port=".$port, $username,
-        $password, $options);
-} catch (PDOException $e) {
-    die("Chyba pripojenia: " . $e->getMessage());
+$meno = $_POST['meno'];
+$email = $_POST['email'];
+$sprava = $_POST['sprava'];
+
+// ak sú premenné prázdne
+if (empty($meno) || empty($email) || empty($sprava)) {
+    die("VŠetky polia sú povinné");
 }
 
-$meno = $_POST["meno"];
-$email = $_POST["email"];
-$sprava = $_POST["sprava"];
-// SQL príkaz INSERT
-$sql = "INSERT INTO udaje (meno, email, sprava)
-    VALUES ('".$meno."', '".$email."', '".$sprava."')";
-$statement = $conn->prepare($sql);
-try {
-    $insert = $statement->execute();
-    header("Location: http://localhost/sablona/thankyou.php");
-    return $insert;
-} catch (\Exception $exception) {
-    return false;
-}
-// Zatvorenie pripojenia
-$conn = null;
+// nová inštancia triedy Contact
 
+$kontakt = new Contact();
+$ulozene = $kontakt->ulozSpravu($meno, $email, $sprava);
+
+if ($ulozene) {
+    header("Location: ../thankyou.php");
+} else {
+    die("Chyba pri odoslaní správy do databázy");
+    http_response_code(404);
+}
