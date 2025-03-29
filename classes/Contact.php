@@ -1,7 +1,8 @@
 <?php
 
 namespace formular;
-require_once ('../db/config.php');
+define('__ROOT__', dirname(dirname(__FILE__)));
+require_once (__ROOT__.'/db/config.php');
 use PDO;
 use PDOException;
 
