@@ -30,7 +30,7 @@ class Contact extends \Database
 
     public function ulozSpravu($meno,$email,$sprava)
     {
-        $sql = "INSERT INTO udaje (meno,email,sprava) VALUES (:meno,:email,:sprava)";
+        $sql = "INSERT INTO udaje1 (meno,email,sprava) VALUES (:meno,:email,:sprava)";
 
         $statement = $this->conn->prepare($sql);
 
