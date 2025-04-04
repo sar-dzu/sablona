@@ -1,26 +1,23 @@
 <?php
 
 namespace otazkyodpovede;
-define('__ROOT__', dirname(dirname(__FILE__)));
-require_once(__ROOT__.'/db/config.php');
 use PDO;
-use PDOException;
+use Database;
 
-class QnA
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+if (!defined('__ROOT__')) {
+    define('__ROOT__', dirname(dirname(__FILE__)));
+}
+require_once(__ROOT__.'/classes/Database.php');
+
+
+class QnA extends \Database
 {
     private $conn;
     public function __construct(){
-        $config = DATABASE;
-        $options = array(
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        );
-
-        try {
-            $this->conn = new PDO('mysql:host='.$config['HOST'].';dbname='.$config['DBNAME'].';port='. $config['PORT'], $config['USER_NAME'],$config['PASSWORD'], $options);
-        } catch (PDOException $e) {
-            die("Chyba pripojenia: ". $e->getMessage());
-        }
+        parent::__construct();
+        $this->conn = $this->getConnection();
     }
 
     public function insertQnA(){
@@ -31,7 +28,7 @@ class QnA
 
             $this->conn->beginTransaction();
 
-            $sql = "INSERT INTO qna (otazka, odpoved) VALUES (:otazka, :odpoved)";
+            $sql = "INSERT IGNORE INTO qna1 (otazka, odpoved) VALUES (:otazka, :odpoved)";
             $statement = $this->conn->prepare($sql);
 
             for ($i=0; $i<count($otazky); $i++) {
@@ -42,23 +39,21 @@ class QnA
             $this->conn->commit();
             echo "Dáta vložené do tabuľky";
         } catch (Exception $e) {
-            echo "Chyba pri vkladaní dát do tabuľky: ". $e->getMessage();
+            echo "Chyba pri vkladaní dát do tabuľky: " . $e->getMessage();
             $this->conn->rollBack();
-        } finally {
-            $this->conn = null;
         }
     }
 
     public function getQnA(){
         try {
-            $sql = "SELECT otazka, odpoved FROM qna"; // získa vsetky otázky a odpovede z tabulky qna
+            $sql = "SELECT otazka, odpoved FROM qna1"; // získa vsetky otázky a odpovede z tabulky qna
             $statement = $this->conn->prepare($sql);
             $statement->execute();
             // vráti všetky výsledky vo formáte asociatívneho poľa otazka =>odpoved
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (Exception $e) {
             echo "Chyba pri získaní qna: ". $e->getMessage();
-            $this->conn->rollBack(); //ak nastane chyba pocas transakcie, vráti všetky zmeny v db spat
+            return false;
         }
     }
 }
