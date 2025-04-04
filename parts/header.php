@@ -15,7 +15,6 @@
 <body>
 
 <?php
-include_once ('functions.php');
-$menu = getMenuData('header');
+
 include_once('parts/nav.php');
 ?>
