@@ -1,19 +1,21 @@
 <?php
-
 namespace formular;
-define('__ROOT__', dirname(dirname(__FILE__)));
-require_once (__ROOT__.'/db/config.php');
-use PDO;
-use PDOException;
 
-class Contact
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+if (!defined('__ROOT__')) {
+    define('__ROOT__', dirname(dirname(__FILE__)));
+}require_once (__ROOT__.'/classes/Database.php');
+
+class Contact extends \Database
 {
     private $conn;
     public function __construct() {
-        $this->connect();
+        parent::__construct();
+        $this->conn = $this->getConnection();
     }
 
-    private function connect() {
+    /* private function connect() {
         $config = DATABASE;
         $options = array(
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -24,27 +26,28 @@ class Contact
         } catch (PDOException $e) {
             die("Spojenie zlyhalo: " . $e->getMessage());
         }
-    }
+    } */
 
     public function ulozSpravu($meno,$email,$sprava)
     {
-        $sql = "INSERT INTO udaje (meno,email,sprava) VALUES ('".$meno."','".$email."','".$sprava."')";
+        $sql = "INSERT INTO udaje (meno,email,sprava) VALUES (:meno,:email,:sprava)";
 
         $statement = $this->conn->prepare($sql);
 
         try {
-            $insert = $statement->execute();
-            header("location:../index.php");
-            http_response_code(200);
+            $insert = $statement->execute(array(':meno'=>$meno,':email'=>$email,':sprava'=>$sprava));
+            if ($insert) {
+                http_response_code(200);
+                header("Location: ../thankyou.php");
+            } else {
+                die("Chyba pri odoslaní správy do databázy");
+            }
             return $insert;
         } catch (\Exception $e) {
-            return http_response_code(404);
+            http_response_code(404);
+            return false;
         }
 
-    }
-    public function __destruct()
-    {
-        $this->conn = null;
     }
 
 }

@@ -19,7 +19,9 @@ $ulozene = $kontakt->ulozSpravu($meno, $email, $sprava);
 
 if ($ulozene) {
     header("Location: ../thankyou.php");
+    exit();
 } else {
-    die("Chyba pri odoslaní správy do databázy");
     http_response_code(404);
+    die("Chyba pri odoslaní správy do databázy");
+
 }
