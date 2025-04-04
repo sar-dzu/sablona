@@ -1,6 +1,8 @@
+
+
 <?php
-include_once ('functions.php');
-$menu = getMenuData("footer");
+include_once ('classes/Menu.php');
+$menuManager = new Menu();
 ?>
 
 <footer class="container bg-dark text-white">
@@ -19,7 +21,14 @@ $menu = getMenuData("footer");
         <div class="col-25">
             <h4>Rýchle odkazy</h4>
             <ul>
-                <?php printMenu($menu); ?>
+                <?php
+                if ($menuManager->isValidMenuType("footer")) {
+                    $menuData = $menuManager->getMenuData("footer");
+                    $menuManager->printMenu($menuData);
+                } else {
+                    echo "Neplatný typ menu";
+                }
+                ?>
             </ul>
         </div>
         <div class="col-25">
